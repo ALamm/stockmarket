@@ -1,0 +1,73 @@
+
+<header >
+    <nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header brandwidth">
+            <div class="brandCommon brandLabelwidth">
+              <a class="navbar-brand" href="/">Stock Market App</a>
+            </div>
+            <div class="brandCommon">
+                <p class="brandCommon periodLabel">Months:</p>
+                <div class="formBox">
+                    <form ng-submit="rangeSubmit(3)" class="brandCommon ">
+                        <input type="submit" class="btn btn-primary btnbackground" ng-class="{'btnActive': range == 3}" value="3">
+                    </form>
+                    <form ng-submit="rangeSubmit(6)" class="brandCommon">
+                        <input type="submit" class="btn btn-primary btnbackground" ng-class="{'btnActive': range == 6}" value="6">
+                    </form>
+                    <form ng-submit="rangeSubmit(9)" class="brandCommon">
+                        <input type="submit" class="btn btn-primary btnbackground" ng-class="{'btnActive': range == 9}" value="9">
+                    </form>
+                    <form ng-submit="rangeSubmit(12)" class="brandCommon">
+                        <input type="submit" class="btn btn-primary btnbackground" ng-class="{'btnActive': range == 12}" value="12">
+                    </form>                                        
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </nav>
+</header>
+<div class="container">
+    <!--Stock Chart-->
+    <div class="col-lg-12">
+        <!--<canvas tc-chartjs-line chart-options="options" chart-data="data" ng-click="chartClick($event)" chart="chart"  chart-legend="lineChart1" ></canvas>-->
+        <canvas tc-chartjs-line chart-options="options" chart-data="data"></canvas>    
+    </div>
+    <div class="col-sm-12 stocksContainer">
+        <div class="instructions">Choose from a complete list of 3178 Stocks. Check out the complete <a href="https://www.quandl.com/data/WIKI?keyword=" target="_blank">reference</a></div>
+        <!--Add Stock -->
+        <!--<span>Selected: {value: {id: {{selected.id}}, name: {{selected.name}} }]</span>-->
+        <!--see this for complete referece to ui-select:  https://github.com/angular-ui/ui-select/wiki/ui-select-choices-->
+        <form  ng-submit="submit()">
+            <div class="stockSearch">
+                <ui-select ng-model="selected.value">
+                    <ui-select-match placeholder="start typing your stock symbol">
+                        <span ng-bind="$select.selected.name"></span>
+                    </ui-select-match >
+                    <ui-select-choices position="auto" repeat="item in (itemArray | filter: $select.search) track by item.id">
+                        <span ng-bind="item.name"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="stockSearchButton">
+                <input type="submit" class="btn btn-primary" value="Add Stock">
+            </div>
+        </form>
+        <!--Stock Panels-->
+        <div class="col-sm-4" ng-repeat="stocks in data.datasets">
+            <!--The ng-submit directive specifies a function to run when the form is submitted.-->
+            <form ng-submit="remove(stocks.label)";>
+                <div class="panel panel-default panelHeight">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{stocks.label}}</h3>
+                        <input type="submit" class="btn btn-danger removeStock" value="X">
+                    </div>
+                    <div class="panel-body">
+                        {{stocks.stockDescription}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

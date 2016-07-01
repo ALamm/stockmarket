@@ -1,0 +1,83 @@
+body {
+  background-color:#f1f1f1;
+}
+.brandwidth {
+  width: 100%;
+}
+.brandLabelwidth {
+  width: 75%;
+}
+.periodLabel {
+  padding-right: 10px;
+  position: relative;
+    top: 11px;
+}
+.btnbackground {
+  margin-right: 3px;
+    background: #a9a9a9;
+}
+.btnActive {
+  background: #3071a9!important;
+}
+.formBox {
+  background: #a0a0a0;
+  padding: 5px;
+  overflow: hidden;
+  margin:2px;
+   border-radius: 6px;
+}
+.brandCommon {
+    display: inline-block;
+    float: left;
+}
+.branding {
+  width: 80%;
+}
+.instructions {
+  position: relative;
+    left: 20px;
+    top: -6px;
+}
+.stocksContainer{
+  margin-top: 25px;
+  padding:25px 0 3px 0;
+  background:#abdbf3;
+}
+.removeStock{
+      right: -10px;
+    top: -25px;
+    float: right;
+    position: relative;
+}
+.stockSearch {
+    display: inline-block;
+    width: 35%;
+    padding-left: 15px;
+    padding-bottom: 30px;
+}
+.stockSearchButton {
+      display: inline-block;
+    position: relative;
+    top: -12px;
+    padding-left: 10px;
+}
+.panelHeight {
+  min-height: 130px;
+}
+.tc-chart-js-legend {
+  list-style-type: none;
+  padding-left: 0px;
+}
+.tc-chart-js-legend li {
+  display: block;
+  float: left;
+  clear:both;
+  padding:10px;
+}
+.tc-chart-js-legend li span {
+  width:25px;
+  height:25px;
+  display:block;
+  float:left;
+  margin-right:10px;
+}

@@ -7,15 +7,21 @@ var io = require('socket.io')(server);
 
 var mongooose = require('mongoose');
 require('dotenv').config();
-var config = require('./config');
+//var config = require('./config');
 var routes = require('./routes.js');
+var moment = require('moment');
+moment().format();
 
 var port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
 
-mongooose.connect(config.getDBConnectionString(), function(err, data) {
+var user = process.env.user;
+var password = process.env.password;
+var getDBConnectionString= 'mongodb://' + user + ':' + password + '@ds017258.mlab.com:17258/stockmarket';
+
+mongooose.connect(getDBConnectionString, function(err, data) {
     if(err) throw err;
     console.log("*** connected to database ***")
 });

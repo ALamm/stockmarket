@@ -1,5 +1,19 @@
 body {
-  background-color:#f1f1f1;
+  background-color:#f9fff5;
+}
+.navFont {
+  font-size: 33px;
+  position: relative;
+    top: 9px;
+}
+.monthsPosition {
+      position: relative;
+    top: 9px;
+}
+.navbarSpecial{
+  background-color: #fff;
+  margin-bottom: 0px;
+  min-height: 70px;
 }
 .brandwidth {
   width: 100%;
@@ -12,15 +26,22 @@ body {
   position: relative;
     top: 11px;
 }
+.btn-primary:hover {
+  background: #92c5be!important;
+  border-color: inherit!important;
+}
 .btnbackground {
   margin-right: 3px;
     background: #a9a9a9;
 }
 .btnActive {
-  background: #3071a9!important;
+  background: #92c5be!important;
+}
+.btn-primary {
+      border-color: #fff;
 }
 .formBox {
-  background: #a0a0a0;
+  /*background: #cfcfcf;*/
   padding: 5px;
   overflow: hidden;
   margin:2px;
@@ -33,21 +54,33 @@ body {
 .branding {
   width: 80%;
 }
+.addStock {
+  background: #6a9370
+}
 .instructions {
   position: relative;
     left: 20px;
     top: -6px;
 }
+.panelT {
+  background: #eff3ec
+}
+.bigContainer {
+  background: #f6faf3;
+    border-left: 1px solid #d3d1d1;
+    border-right: 1px solid #d3d1d1;
+}
 .stocksContainer{
-  margin-top: 25px;
+  /*margin-top: 25px;*/
   padding:25px 0 3px 0;
-  background:#abdbf3;
+  background:#c9d9ce;
 }
 .removeStock{
       right: -10px;
     top: -25px;
     float: right;
     position: relative;
+    background: #f75858;
 }
 .stockSearch {
     display: inline-block;

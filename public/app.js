@@ -6,14 +6,20 @@ var stocksApp = angular.module('stocksApp', ['ngRoute', 'tc.chartjs','ui.select'
         var labels = [];
         var stockDescription = [];
         var datasets = [];
-        var colours = ['#97bbcd','#dcdcdc', '#f7464a', '#46bfbd','#fdb45c','#949fb1','#4d5360'];
+        var colours = ['#6a9370','#f75858', '#fd9358', '#fee984','#c8d65e','#9088d8','#6a9dd6'];
 
         // grab the labels   e.g. (the dates)
         for (var j = 0; j < result[0].dataset.data.length; j++) {
             labels.push(result[0].dataset.data[j][0]);            
         }
         // grab the datasets
+        var color = '';
+
         for (var i = 0; i < result.length; i++) {
+            // create random colors past the pre-defined set of 7 above
+            if (i > 6) { 
+                colours[i] = '#'+ (Math.random().toString(16) + '0000000').slice(2, 8);
+            }
 	        datasets.push ({
                 stockDescription: result[i].dataset.name,
                 borderCapStyle: 'butt',

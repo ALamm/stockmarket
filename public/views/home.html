@@ -1,12 +1,12 @@
 
 <header >
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbarSpecial">
     <div class="container">
         <div class="navbar-header brandwidth">
             <div class="brandCommon brandLabelwidth">
-              <a class="navbar-brand" href="/">Stock Market App</a>
+              <a class="navbar-brand navFont" href="/">Stock Market App</a>
             </div>
-            <div class="brandCommon">
+            <div class="brandCommon monthsPosition">
                 <p class="brandCommon periodLabel">Months:</p>
                 <div class="formBox">
                     <form ng-submit="rangeSubmit(3)" class="brandCommon ">
@@ -30,7 +30,7 @@
 </header>
 <div class="container">
     <!--Stock Chart-->
-    <div class="col-lg-12">
+    <div class="col-lg-12 bigContainer">
         <!--<canvas tc-chartjs-line chart-options="options" chart-data="data" ng-click="chartClick($event)" chart="chart"  chart-legend="lineChart1" ></canvas>-->
         <canvas tc-chartjs-line chart-options="options" chart-data="data"></canvas>    
     </div>
@@ -51,7 +51,7 @@
                 </ui-select>
             </div>
             <div class="stockSearchButton">
-                <input type="submit" class="btn btn-primary" value="Add Stock">
+                <input type="submit" class="btn btn-primary addStock" value="Add Stock">
             </div>
         </form>
         <!--Stock Panels-->
@@ -59,7 +59,7 @@
             <!--The ng-submit directive specifies a function to run when the form is submitted.-->
             <form ng-submit="remove(stocks.label)";>
                 <div class="panel panel-default panelHeight">
-                    <div class="panel-heading">
+                    <div class="panel-heading panelT">
                         <h3 class="panel-title">{{stocks.label}}</h3>
                         <input type="submit" class="btn btn-danger removeStock" value="X">
                     </div>

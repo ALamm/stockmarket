@@ -78,42 +78,16 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
     // When you leave out the URL, it will, by default, use the domain and port from the current web page 
     var socket = io.connect();
     // someone else added a stock
-    socket.on('broadcast new stock', function (result) {
-        console.log('another client added a stock');
-        $http.post('/stocks',{stock: result, range: $scope.range})
+    socket.on('broadcast stock change', function (result) {
+        $http.post('/stocks/range',{range: $scope.range})
             .success(function(val) { 
-                if (val === 'duplicate') {
-                    alert('This stock is already chosen')
-                }
-                else {
-                    $scope.data = dataBuilder(val);
-                }                
+                $scope.data = dataBuilder(val);  
             })
             .error(function(data, status) {                
-                console.log('status', status);
-            });        
+                console.log('Unable to retrieve data from API. Error code:', status);
+            });          
     });
-    socket.on('broadcast delete stock', function (result) {
-        console.log('another client deleted a stock');
-        // The following method had to be used instead of: $http.delete('/stocks', {stock: stock, range: $scope.range})
-	    $http({ url: '/stocks', 
-                method: 'DELETE', 
-                data: {stock: result, range: $scope.range}, 
-                headers: {"Content-Type": "application/json;charset=utf-8"}
-            })
-            .success(function(val) {                 
-                if (val === 'required') {
-                    console.log("Last stock - must be kept")
-                }
-                else {
-                    $scope.data = dataBuilder(val);             
-                }   
-            })
-            .error(function(data, status) {                
-                console.log('Could not delete the stock.  Error: ', status);
-            });        
-    });
-    
+   
 
     // GET STOCKS WHEN PAGE LOADS
     $http.get('/stocks')        
@@ -138,18 +112,18 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
                 .error(function(data, status) {                
                     console.log('Unable to retrieve new dates from API. Error code:', status);
                 });  
-            }  
+            }              
     }
 
     // ADD A NEW STOCK 
     $scope.submit = function() {
-        socket.emit('add stock', {stock: $scope.selected});           
         $http.post('/stocks',{stock: $scope.selected, range: $scope.range})
             .success(function(result) { 
                 if (result === 'duplicate') {
                     alert('This stock is already chosen')
                 }
                 else {
+                    socket.emit('stock change', {stock: $scope.selected.value.name});    
                     $scope.data = dataBuilder(result);
                 }                
             })
@@ -160,7 +134,6 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
  
     // REMOVE A STOCK
     $scope.remove = function(stock) {
-        socket.emit('delete stock', { stock: stock});
         // The following method had to be used instead of: $http.delete('/stocks', {stock: stock, range: $scope.range})
 	    $http({ url: '/stocks', 
                 method: 'DELETE', 
@@ -172,6 +145,7 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
                     console.log("Last stock - must be kept")
                 }
                 else {
+                    socket.emit('stock change', { stock: stock});
                     $scope.data = dataBuilder(result);
                 }   
             })

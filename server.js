@@ -30,16 +30,12 @@ mongooose.connect(getDBConnectionString, function(err, data) {
 io.on('connection', function (socket) {
   console.log("a client connnected to the server");
 
-  // user requests a new stock
-  socket.on('add stock', function (result) {
-      console.log('a client requested a new stock');
-      socket.broadcast.emit('broadcast new stock', result.stock);
+  // user requests a new stock or deletes a stock
+  socket.on('stock change', function (result) {
+      console.log('a client added/deleted stock: ', result.stock);
+      socket.broadcast.emit('broadcast stock change', result.stock);
   });
-  // user deletes a stock
-  socket.on('delete stock', function (result) {
-      console.log('a client deleted a stock');
-      socket.broadcast.emit('broadcast delete stock', result.stock);
-  }); 
+
 });
 
 routes(app);

@@ -66,8 +66,12 @@ stocksApp.config(function($routeProvider) {
 // CONTROLLERS
 stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 
+    // initialize the range variable to 3 months
+    $scope.range = 3; 
+
     // In Angular's regular digest loop it won't see that the $scope.data variable has changed in the socket.io code.  Why? Angular doesn't chaeck non-native angular code during its regular digest loop.  Hence the $watch and later on the $apply (which will force a digest loop to start and check the $watch variables).
-    $scope.$watch('data', function() { });
+    // UPDATE:  changed the code and now $scope.data is within angular's $http code so it will automatically be watched
+    // $scope.$watch('data', function() { });
 
     // SOCKET.IO
     // documentation calls for: "var socket = io.connect('http://localhost');"  - this uses port 80 as the default.  If your local server is different it will throw 'acceess origin' errors
@@ -76,18 +80,40 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
     // someone else added a stock
     socket.on('broadcast new stock', function (result) {
         console.log('another client added a stock');
-        $scope.$apply(function() {
-            $scope.data = result;
-        });
+        $http.post('/stocks',{stock: result, range: $scope.range})
+            .success(function(val) { 
+                if (val === 'duplicate') {
+                    alert('This stock is already chosen')
+                }
+                else {
+                    $scope.data = dataBuilder(val);
+                }                
+            })
+            .error(function(data, status) {                
+                console.log('status', status);
+            });        
     });
     socket.on('broadcast delete stock', function (result) {
         console.log('another client deleted a stock');
-        $scope.$apply(function() {
-            $scope.data = result;
-        });
+        // The following method had to be used instead of: $http.delete('/stocks', {stock: stock, range: $scope.range})
+	    $http({ url: '/stocks', 
+                method: 'DELETE', 
+                data: {stock: result, range: $scope.range}, 
+                headers: {"Content-Type": "application/json;charset=utf-8"}
+            })
+            .success(function(val) {                 
+                if (val === 'required') {
+                    console.log("Last stock - must be kept")
+                }
+                else {
+                    $scope.data = dataBuilder(val);             
+                }   
+            })
+            .error(function(data, status) {                
+                console.log('Could not delete the stock.  Error: ', status);
+            });        
     });
-
-    $scope.range = 3; 
+    
 
     // GET STOCKS WHEN PAGE LOADS
     $http.get('/stocks')        
@@ -117,6 +143,7 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
 
     // ADD A NEW STOCK 
     $scope.submit = function() {
+        socket.emit('add stock', {stock: $scope.selected});           
         $http.post('/stocks',{stock: $scope.selected, range: $scope.range})
             .success(function(result) { 
                 if (result === 'duplicate') {
@@ -124,7 +151,6 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
                 }
                 else {
                     $scope.data = dataBuilder(result);
-                    socket.emit('add stock', { data: $scope.data});           
                 }                
             })
             .error(function(data, status) {                
@@ -134,6 +160,7 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
  
     // REMOVE A STOCK
     $scope.remove = function(stock) {
+        socket.emit('delete stock', { stock: stock});
         // The following method had to be used instead of: $http.delete('/stocks', {stock: stock, range: $scope.range})
 	    $http({ url: '/stocks', 
                 method: 'DELETE', 
@@ -146,7 +173,6 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
                 }
                 else {
                     $scope.data = dataBuilder(result);
-                    socket.emit('delete stock', { data: $scope.data});
                 }   
             })
             .error(function(data, status) {                

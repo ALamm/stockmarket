@@ -33,12 +33,12 @@ io.on('connection', function (socket) {
   // user requests a new stock
   socket.on('add stock', function (result) {
       console.log('a client requested a new stock');
-      socket.broadcast.emit('broadcast new stock', result.data);
+      socket.broadcast.emit('broadcast new stock', result.stock);
   });
   // user deletes a stock
   socket.on('delete stock', function (result) {
       console.log('a client deleted a stock');
-      socket.broadcast.emit('broadcast delete stock', result.data);
+      socket.broadcast.emit('broadcast delete stock', result.stock);
   }); 
 });
 

@@ -6,6 +6,18 @@ body {
   position: relative;
     top: 9px;
 }
+.alert-warning {
+  background-color:#f6faf3
+}
+.syncAlert {
+      height: 35px;
+    clear: both;
+    position: relative;
+    top: 18px;
+    padding: 6px;
+    font-style: italic;
+    margin: 0;
+}
 .monthsPosition {
       position: relative;
     top: 9px;
@@ -13,7 +25,7 @@ body {
 .navbarSpecial{
   background-color: #fff;
   margin-bottom: 0px;
-  min-height: 70px;
+  min-height: 105px;
 }
 .brandwidth {
   width: 100%;

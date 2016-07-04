@@ -1,4 +1,4 @@
-var stocksApp = angular.module('stocksApp', ['ngRoute', 'tc.chartjs','ui.select', 'ngSanitize']);
+var stocksApp = angular.module('stocksApp', ['ngRoute', 'tc.chartjs','ui.select', 'ngSanitize', 'cgBusy']);
 
 
 // LOCAL FUNCTIONS
@@ -105,7 +105,7 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
         }
         else {
             $scope.range = num;
-            $http.post('/stocks/range',{range: $scope.range})
+            $scope.myPromise = $http.post('/stocks/range',{range: $scope.range})
                 .success(function(result) { 
                      $scope.data = dataBuilder(result);
                 })
@@ -117,7 +117,7 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
 
     // ADD A NEW STOCK 
     $scope.submit = function() {
-        $http.post('/stocks',{stock: $scope.selected, range: $scope.range})
+        $scope.myPromise = $http.post('/stocks',{stock: $scope.selected, range: $scope.range})
             .success(function(result) { 
                 if (result === 'duplicate') {
                     alert('This stock is already chosen')
@@ -135,7 +135,7 @@ stocksApp.controller('mainController', ['$scope', '$http', '$routeParams', funct
     // REMOVE A STOCK
     $scope.remove = function(stock) {
         // The following method had to be used instead of: $http.delete('/stocks', {stock: stock, range: $scope.range})
-	    $http({ url: '/stocks', 
+	    $scope.myPromise = $http({ url: '/stocks', 
                 method: 'DELETE', 
                 data: {stock: stock, range: $scope.range}, 
                 headers: {"Content-Type": "application/json;charset=utf-8"}

@@ -1,6 +1,9 @@
 body {
   background-color:#f9fff5;
 }
+.cg-busy-default-text {
+    min-width: 104px;
+}
 .navFont {
   font-size: 33px;
   position: relative;
@@ -14,9 +17,20 @@ body {
     clear: both;
     position: relative;
     top: 18px;
-    padding: 6px;
+    padding: 6px 6px 6px 15px;
     font-style: italic;
     margin: 0;
+}
+.spinnyAddRemove {
+  position: relative;
+  display: inline-block;  
+      top: -35px;
+    width: 100px!important;
+}
+.cg-busy-default-sign {
+  left: 10px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 .monthsPosition {
       position: relative;

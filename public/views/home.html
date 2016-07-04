@@ -1,5 +1,5 @@
 
-<header >
+<header >    
     <nav class="navbar navbar-default navbarSpecial">
     <div class="container">
         <div class="navbar-header brandwidth">
@@ -54,6 +54,7 @@
             <div class="stockSearchButton">
                 <input type="submit" class="btn btn-primary addStock" value="Add Stock">
             </div>
+            <div cg-busy="myPromise" class="spinnyAddRemove"></div>
         </form>
         <!--Stock Panels-->
         <div class="col-sm-4" ng-repeat="stocks in data.datasets">

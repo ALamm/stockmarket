@@ -1,7 +1,7 @@
 # Stock Market APP
 
 # Demo Site
-
+https://stockmarket-fcc.herokuapp.com
 
 # User Stories
 1.  I can view a graph displaying the recent trend lines for each added stock.

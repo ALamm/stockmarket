@@ -7,7 +7,6 @@ var io = require('socket.io')(server);
 
 var mongooose = require('mongoose');
 require('dotenv').config();
-//var config = require('./config');
 var routes = require('./routes.js');
 var moment = require('moment');
 moment().format();

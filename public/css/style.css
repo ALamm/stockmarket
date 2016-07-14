@@ -141,6 +141,10 @@ body {
   margin-right:10px;
 }
 
+.footer {
+  margin-top: 25px;
+}
+
 .footer .container {
     border-top: 1px solid #ccc;
     padding: 20px 5px 20px 5px;

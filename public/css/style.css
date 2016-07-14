@@ -140,3 +140,15 @@ body {
   float:left;
   margin-right:10px;
 }
+
+.footer .container {
+    border-top: 1px solid #ccc;
+    padding: 20px 5px 20px 5px;
+    border-radius: 4px;
+}
+.builtby {
+    font-size: 11px;
+    color: #431c5d;
+    border-top: none !important;
+    margin-left: 15px;
+}
